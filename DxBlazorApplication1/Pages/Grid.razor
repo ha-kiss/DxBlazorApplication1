@@ -1,0 +1,55 @@
+﻿@page "/grid"
+
+@using DxBlazorApplication1.Data
+@using Microsoft.EntityFrameworkCore
+@using DevExpress.Blazor
+@inject WeatherForecastService ForecastService
+
+<h2>DevExpress Grid</h2>
+
+<p class="pb-2 pt-2 mw-1100">
+    The DevExpress Grid for Blazor allows you to display and manage data via a tabular (rows/columns) UI metaphor.
+    This page uses our Blazor Grid component to display weather forecast values.
+</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DxGrid Data="@forecasts"
+        CssClass="mw-1100">
+        <Columns>
+            <DxGridDataColumn Caption="Date" FieldName="Date" />
+            <DxGridDataColumn Caption="Temperature" FieldName="TemperatureF" />
+        </Columns>
+    </DxGrid>
+    <br />
+    <br />
+    <DxGrid Data="@users"
+        CssClass="mw-1100">
+        <Columns>
+            <DxGridDataColumn Caption="ID" FieldName="ID" />
+            <DxGridDataColumn Caption="UserName" FieldName="UserName" />
+            <DxGridDataColumn Caption="Active" FieldName="IsActive">
+                <CellDisplayTemplate>
+                    <DxCheckBox CssClass="d-inline-block" Enabled="false" Checked="(bool)context.Value" />
+                </CellDisplayTemplate>
+            </DxGridDataColumn>
+        </Columns>
+    </DxGrid>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+    private List<XAF_User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+
+        var dbContext = new KTIMAPMModel();
+        users = await dbContext.XAF_Users.ToListAsync();
+    }
+}
