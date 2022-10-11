@@ -21,34 +21,42 @@ using System.Linq.Expressions;
 
 namespace DxBlazorApplication1
 {
-    public partial class XAF_Role {
+    public partial class XAF_Users_Web_Detail {
 
-        public XAF_Role()
+        public XAF_Users_Web_Detail()
         {
-            this.XAF_Roles_ID1 = new List<XAF_Role>();
-            this.XAF_Roles_ID = new List<XAF_Role>();
-            this.XAF_Users = new List<XAF_User>();
             OnCreated();
         }
 
         public virtual int ID { get; set; }
 
-        public virtual string? Name { get; set; }
+        public virtual string? FULL_NAME { get; set; }
 
-        public virtual bool IsAdministrative { get; set; }
+        public virtual string? COMPANY { get; set; }
 
-        public virtual bool CanEditModel { get; set; }
+        public virtual string? ADDRESS { get; set; }
 
-        /// <summary>
-        /// When 0 the role is not visible to the end users and cannot be assigned to new users.
-        /// </summary>
-        public virtual bool IS_VISIBLE { get; set; }
+        public virtual string? EMAIL { get; set; }
 
-        public virtual IList<XAF_Role> XAF_Roles_ID1 { get; set; }
+        public virtual string? TEL1 { get; set; }
 
-        public virtual IList<XAF_Role> XAF_Roles_ID { get; set; }
+        public virtual string? TEL2 { get; set; }
 
-        public virtual IList<XAF_User> XAF_Users { get; set; }
+        public virtual Guid GUID { get; set; }
+
+        public virtual int? UPLOADED_FILE_ID { get; set; }
+
+        public virtual string? SPECIALIZATION { get; set; }
+
+        public virtual string? FIRST_NAME { get; set; }
+
+        public virtual string? LAST_NAME { get; set; }
+
+        public virtual string? AFM { get; set; }
+
+        public virtual DateTime? DATE_REGISTERED { get; set; }
+
+        public virtual XAF_User XAF_User { get; set; }
 
         #region Extensibility Method Definitions
 

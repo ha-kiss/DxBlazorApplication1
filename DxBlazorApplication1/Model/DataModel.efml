@@ -64,12 +64,56 @@
       <column name="APPOINTMENT_FACILITY_ID" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
     </property>
   </class>
+  <class name="XAF_Users_Web_Detail" entity-set="XAF_Users_Web_Details" table="XAF_Users_Web_Details" schema="dbo" p1:Guid="4bc0e09e-71b9-49a1-a707-6190e90b184c">
+    <id name="ID" type="Int32" p1:ValidateRequired="true" p1:Guid="1468cc32-5523-45fd-a8e1-f6cfeaed3507">
+      <column name="ID" not-null="True" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="FULL_NAME" type="String" p1:nullable="True" p1:ValidateMaxLength="100" p1:ValidateRequired="false" p1:Guid="ac656bb8-8fe5-4d64-95cf-494f8e4af5af">
+      <column name="FULL_NAME" not-null="False" length="100" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="COMPANY" type="String" p1:nullable="True" p1:ValidateMaxLength="100" p1:ValidateRequired="false" p1:Guid="ab77cb1c-40a8-4777-8d54-d3940c967d77">
+      <column name="COMPANY" not-null="False" length="100" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="ADDRESS" type="String" p1:nullable="True" p1:ValidateMaxLength="500" p1:ValidateRequired="false" p1:Guid="98fde792-8692-44a3-86f7-c85d866f6628">
+      <column name="ADDRESS" not-null="False" length="500" sql-type="nvarchar" p1:unicode="True" />
+    </property>
+    <property name="EMAIL" type="String" p1:nullable="True" p1:ValidateMaxLength="150" p1:ValidateRequired="false" p1:Guid="fb93fb11-dba1-412f-b697-ab8c709fe259">
+      <column name="EMAIL" not-null="False" length="150" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="TEL1" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="37e3c3bc-7f20-4549-89d5-e0c09e06a4d8">
+      <column name="TEL1" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="TEL2" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="13082718-0a17-40b8-9149-f1c01afb7179">
+      <column name="TEL2" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="GUID" type="Guid" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="0e78a577-3fe6-4c9b-9bf7-95fd547d8868">
+      <column name="GUID" default="newid()" not-null="True" sql-type="uniqueidentifier" p1:unicode="False" />
+    </property>
+    <property name="UPLOADED_FILE_ID" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0bd799f5-0e65-445f-8011-01b817953481">
+      <column name="UPLOADED_FILE_ID" not-null="False" precision="10" scale="0" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="SPECIALIZATION" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="022f788b-f4ce-43ec-8cad-36523fa185f0">
+      <column name="SPECIALIZATION" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="FIRST_NAME" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="e999e5ef-89b9-473c-9a80-5c4cf0029a7f">
+      <column name="FIRST_NAME" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="LAST_NAME" type="String" p1:nullable="True" p1:ValidateMaxLength="50" p1:ValidateRequired="false" p1:Guid="5c24de55-4e8b-47ac-b759-0fdc79428f9a">
+      <column name="LAST_NAME" not-null="False" length="50" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="AFM" type="String" p1:nullable="True" p1:ValidateMaxLength="10" p1:ValidateRequired="false" p1:Guid="dc8adbe0-a94f-4a3f-8624-12a62861ac3a">
+      <column name="AFM" not-null="False" length="10" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="DATE_REGISTERED" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="157b9cff-99f6-440d-bd6d-42c8506551a0">
+      <column name="DATE_REGISTERED" not-null="False" sql-type="datetime" p1:unicode="False" />
+    </property>
+  </class>
   <associations>
     <association name="XAF_Role_XAF_Role" cardinality="ManyToMany" table="XAF_Roles_Roles" schema="dbo" p1:Guid="6c793000-77cb-47e5-8851-1f2f75bfebad">
-      <end1 multiplicity="Many" name="XAF_Roles" class="XAF_Role" relation-class="XAF_Role" lazy="False" p1:Guid="bc075a77-5127-4428-97d8-c70500fda5d9">
+      <end1 multiplicity="Many" name="XAF_Roles_ID" class="XAF_Role" relation-class="XAF_Role" lazy="False" p1:Guid="bc075a77-5127-4428-97d8-c70500fda5d9">
         <property name="ID" column="ParentRoles_ID" />
       </end1>
-      <end2 multiplicity="Many" name="XAF_Roles1" class="XAF_Role" relation-class="XAF_Role" lazy="False" p1:Guid="5d646696-d1fd-45c2-81ec-1ad66b6b2ff8">
+      <end2 multiplicity="Many" name="XAF_Roles_ID1" class="XAF_Role" relation-class="XAF_Role" lazy="False" p1:Guid="5d646696-d1fd-45c2-81ec-1ad66b6b2ff8">
         <property name="ID" column="ChildRoles_ID" />
       </end2>
     </association>
@@ -79,6 +123,14 @@
       </end1>
       <end2 multiplicity="Many" name="XAF_Users" class="XAF_Role" relation-class="XAF_User" lazy="False" p1:Guid="bc705969-67d2-4eda-8c5c-1763abb6a1e4">
         <property name="ID" column="Users_ID" />
+      </end2>
+    </association>
+    <association name="XAF_User_XAF_Users_Web_Detail" cardinality="OneToOne" on-delete="Cascade" p1:Guid="93621f8e-8b87-4b25-8b2c-3ede5d69610f">
+      <end1 multiplicity="ZeroOrOne" name="XAF_User" class="XAF_Users_Web_Detail" relation-class="XAF_User" constrained="True" lazy="False" p1:Guid="5ba1c799-c334-4c79-94b8-b4ef210c1755">
+        <property name="ID" />
+      </end1>
+      <end2 multiplicity="One" name="XAF_Users_Web_Detail" class="XAF_User" relation-class="XAF_Users_Web_Detail" constrained="False" lazy="False" p1:Guid="fa6fcf8a-6460-4b8e-9b01-900df67da02d">
+        <property name="ID" />
       </end2>
     </association>
   </associations>

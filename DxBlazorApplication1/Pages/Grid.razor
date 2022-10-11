@@ -1,6 +1,7 @@
 ﻿@page "/grid"
 
 @using DxBlazorApplication1.Data
+@using DxBlazorApplication1.Model
 @using Microsoft.EntityFrameworkCore
 @using DevExpress.Blazor
 @inject WeatherForecastService ForecastService
@@ -28,8 +29,12 @@ else
     <br />
     <br />
     <DxGrid Data="@users"
+            EditModelSaving="OnEditModelSaving"
+            DataItemDeleting="OnDataItemDeleting"
+            KeyFieldName="ID"
         CssClass="mw-1100">
         <Columns>
+            <DxGridCommandColumn />
             <DxGridDataColumn Caption="ID" FieldName="ID" />
             <DxGridDataColumn Caption="UserName" FieldName="UserName" />
             <DxGridDataColumn Caption="Active" FieldName="IsActive">
@@ -38,6 +43,19 @@ else
                 </CellDisplayTemplate>
             </DxGridDataColumn>
         </Columns>
+        <EditFormTemplate Context="editFormContext">
+            @{
+                var user = (XAF_User)editFormContext.EditModel;
+            }
+            <DxFormLayout>
+                <DxFormLayoutItem Caption="User Name:">
+                    <DxTextBox @bind-Text="@user.UserName" />
+                </DxFormLayoutItem>
+                <DxFormLayoutItem Caption="Active:">
+                    <DxCheckBox @bind-Checked="@user.IsActive" />
+                </DxFormLayoutItem>
+            </DxFormLayout>
+        </EditFormTemplate>
     </DxGrid>
 }
 
@@ -51,5 +69,44 @@ else
 
         var dbContext = new KTIMAPMModel();
         users = await dbContext.XAF_Users.ToListAsync();
+    }
+
+    async Task OnEditModelSaving(GridEditModelSavingEventArgs e)
+    {
+        var dbContext = new KTIMAPMModel(LogLevel.Information);
+
+        XAF_User editUser = (XAF_User)e.EditModel;
+
+        // Re-query a data item from the database.
+        XAF_User? user = e.IsNew ? new XAF_User() : await dbContext.XAF_Users.FindAsync(editUser.ID);
+
+        // Assign changes from the edit model to the data item.
+        if (user != null)
+        {
+            user.UserName = editUser.UserName;
+            user.IsActive = editUser.IsActive;
+            // Post changes to the database.
+            if (e.IsNew)
+                await dbContext.AddAsync(user);
+            await dbContext.SaveChangesAsync();
+            // Reload the entire Grid.
+            users = await dbContext.XAF_Users.ToListAsync();
+        }
+    }
+
+    async Task OnDataItemDeleting(GridDataItemDeletingEventArgs e)
+    {
+        var dbContext = new KTIMAPMModel(LogLevel.Information);
+
+        // Re-query a data item from the database.
+        var dataItem = dbContext.XAF_Users.Find(((XAF_User)e.DataItem).ID);
+        if (dataItem != null)
+        {
+            // Remove the data item from the database.
+            dbContext.Remove(dataItem);
+            await dbContext.SaveChangesAsync();
+            // Reload the entire Grid.
+            users = await dbContext.XAF_Users.ToListAsync();
+        }
     }
 }

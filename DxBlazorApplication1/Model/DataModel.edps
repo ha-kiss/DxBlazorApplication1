@@ -7,6 +7,7 @@
         <File Name="DataModel.KTIMAPMModel.cs" />
         <File Name="DataModel.XAF_Role.cs" />
         <File Name="DataModel.XAF_User.cs" />
+        <File Name="DataModel.XAF_Users_Web_Detail.cs" />
       </GeneratedFiles>
     </Generation>
     <DatabaseFirstNamingRules>
@@ -132,5 +133,33 @@
       </Template>
     </Templates>
     <AttributeAssemblies />
+    <UpdateFromDatabaseExcludes>
+      <Exclude Name="ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="UserName" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="IsActive" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="ChangePasswordOnFirstLogon" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="StoredPassword" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="PARTY_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="ENERGOI_USER" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="OBJECT_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="CURRENT_TASK_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="START_TIME" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="CURRENT_APPOINTMENT_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="PROJECT_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="APPOINTMENT_FACILITY_ID" Table="dbo.XAF_Users" Type="Column" />
+      <Exclude Name="PK_XAF_Users" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_OBJECT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_CURRENT_TASK_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_APPOINTMENT_FACILITY_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_PARTY_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_CURRENT_APPOINTMENT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_PROJECT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_OBJECT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_CURRENT_TASK_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_APPOINTMENT_FACILITY_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_PARTY_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_CURRENT_APPOINTMENT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+      <Exclude Name="FK_XAF_Users_PROJECT_ID" Table="dbo.XAF_Users" Type="Constraint" />
+    </UpdateFromDatabaseExcludes>
   </ModelSettings>
 </EntityDeveloper>

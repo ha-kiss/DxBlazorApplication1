@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using switcher.Shared
+@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
 <DxLayoutBreakpoint MaxWidth="1200"
@@ -26,7 +27,7 @@
         <Items>
             <DxGridLayoutItem Area="header" CssClass="layout-item">
                 <Template>
-                    <Header @bind-ToggleOn="@IsSidebarExpanded" />
+                    <Header @bind-ToggleOn="@IsSidebarExpanded" @bind-SelectedTheme="@ActiveTheme" />
                 </Template>
             </DxGridLayoutItem>
             <DxGridLayoutItem Area="sidebar" CssClass="layout-item">
@@ -34,7 +35,7 @@
                     <NavMenu StateCssClass="@NavMenuCssClass" />
                 </Template>
             </DxGridLayoutItem>
-            <DxGridLayoutItem Area="content" CssClass="content px-4 layout-item">
+            <DxGridLayoutItem Area="content" CssClass="content px-4 layout-item" @key=@ActiveTheme>
                 <Template>
                     @Body
                 </Template>
@@ -78,4 +79,13 @@
     public void Dispose() {
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
+
+    bool _themeSwitcherShown = false;
+    ThemeItem _activeTheme = ThemeItem.Default;
+    ThemeItem ActiveTheme
+    {
+        get { return _activeTheme; }
+        set { _activeTheme = value; }
+    }
+
 }
