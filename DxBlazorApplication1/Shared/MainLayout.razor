@@ -1,6 +1,7 @@
 ﻿@using switcher.Shared
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime;
 
 <DxLayoutBreakpoint MaxWidth="1200"
                     @bind-IsActive="@IsMobileLayout" />
@@ -69,6 +70,29 @@
     protected override void OnInitialized() {
         NavigationManager.LocationChanged += OnLocationChanged;
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var themeName = await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", "ThemeName");
+        if (themeName != ActiveTheme.Name)
+        {
+            ActiveTheme = ThemeItem.Create(themeName);
+
+            foreach (string stylesheetLinkUrl in ActiveTheme.StylesheetLinkUrl)
+                await JsRuntime.InvokeVoidAsync("fetch", stylesheetLinkUrl, new
+                {
+                    method = "GET",
+                    mode = "no-cors"
+                });
+        }
+    }
+
+    protected async Task<string> GetCookie(string cookieName)
+    {
+
+        return await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", "ThemeName");
+    }
+
     async void OnLocationChanged(object? sender, LocationChangedEventArgs args) {
         if(IsMobileLayout) {
             IsSidebarExpanded = false;
@@ -82,10 +106,15 @@
 
     bool _themeSwitcherShown = false;
     ThemeItem _activeTheme = ThemeItem.Default;
+
     ThemeItem ActiveTheme
     {
         get { return _activeTheme; }
-        set { _activeTheme = value; }
+        set 
+        { 
+            _activeTheme = value; 
+            JsRuntime.InvokeAsync<string>("WriteCookie.WriteCookie", "ThemeName", _activeTheme.Name, 100);
+        }
     }
 
 }
