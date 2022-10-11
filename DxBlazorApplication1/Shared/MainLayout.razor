@@ -68,7 +68,9 @@
     }
 
     protected override void OnInitialized() {
+
         NavigationManager.LocationChanged += OnLocationChanged;
+
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
