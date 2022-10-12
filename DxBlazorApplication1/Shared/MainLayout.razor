@@ -91,7 +91,6 @@
 
     protected async Task<string> GetCookie(string cookieName)
     {
-
         return await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", "ThemeName");
     }
 
