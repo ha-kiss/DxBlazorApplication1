@@ -7,6 +7,24 @@
                     @bind-IsActive="@IsMobileLayout" />
 
 <div class="page">
+
+    <HeadContent>
+        @foreach (var item in ActiveTheme.StylesheetLinkUrl)
+        {
+            <link href="@item" rel="stylesheet" />
+        }
+        @{
+            if (ActiveTheme.StylesheetLinkUrl.Contains("slate"))
+            {
+                <style>
+                    .dxbs-gridview {
+                        --selection-bg: rgba(255, 255, 255, 0.075) !important;
+                    }
+                </style>
+            }
+        }
+    </HeadContent>
+
     <DxGridLayout CssClass="page-layout">
         <Rows>
             @if(IsMobileLayout) {
@@ -67,7 +85,8 @@
         }
     }
 
-    protected override void OnInitialized() {
+    protected override void OnInitialized()
+    {
 
         NavigationManager.LocationChanged += OnLocationChanged;
 
@@ -75,7 +94,11 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var themeName = await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", "ThemeName");
+        var themeName = await Helpers.GetCookieAsync(JsRuntime, "ThemeName");
+
+        if (string.IsNullOrEmpty(themeName) || themeName == "null")
+            themeName = "default";
+
         if (themeName != ActiveTheme.Name)
         {
             ActiveTheme = ThemeItem.Create(themeName);
@@ -86,12 +109,10 @@
                     method = "GET",
                     mode = "no-cors"
                 });
-        }
-    }
 
-    protected async Task<string> GetCookie(string cookieName)
-    {
-        return await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", "ThemeName");
+            if (firstRender)
+                StateHasChanged();          // force a re-Render
+        }
     }
 
     async void OnLocationChanged(object? sender, LocationChangedEventArgs args) {
@@ -113,8 +134,8 @@
         get { return _activeTheme; }
         set 
         { 
-            _activeTheme = value; 
-            JsRuntime.InvokeAsync<string>("WriteCookie.WriteCookie", "ThemeName", _activeTheme.Name, 100);
+            _activeTheme = value;
+            Helpers.SetCookie(JsRuntime, "ThemeName", _activeTheme.Name, 100);
         }
     }
 
